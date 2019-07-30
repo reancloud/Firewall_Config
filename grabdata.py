@@ -3,17 +3,17 @@ import sys
 import xml.etree.ElementTree as ET
 
 def main():
-    if len(sys.argv) < 8:
-        print('Usage: python grabdata.py {username, password, hostname, localgw, prefix, region}\n')
+    if len(sys.argv) < 9:
+        print('Usage: python grabdata.py {username, password, hostname, localgw, prefix, vpnid, region, workload_name}\n')
         sys.exit(0)
 # data to pass in:
-# 1. login username
-# 2. login password
-# 3. desired hostname
-# 4. ip of the source vpc(not the firewall vpc)
-# 5. cidr block of the source vpc, typically just 192.168.0.0/24
-# 6. vpn id of the established vpn connection
-# 7. region that the vpc connecting to fw is in
+# 1. username: login username
+# 2. password: login password
+# 3. hostname: desired hostname
+# 4. localgw: private ip of the fortigate firewall port3
+# 5. prefix: cidr block of the source vpc, typically just 192.168.0.0/24
+# 6. vpnid: vpn id of the established vpn connection
+# 7. region: region that the vpc connecting to fw is in
 
     else:
         username = sys.argv[1]
@@ -23,6 +23,7 @@ def main():
         router_bgp_network_prefix = sys.argv[5]
         vpnid = sys.argv[6]
         regionid = sys.argv[7]
+        wkldname = str(sys.argv[8])
 # get config data from aws
     client = boto3.client('ec2', region_name=regionid)
     data = client.describe_vpn_connections()
@@ -53,7 +54,7 @@ def main():
     router_bgp_remote = root[3][1][2][0].text
     router_bgp_network_id = host
     router_bgp_router_id = host
-    system_zone_name = "Zone_1"
+    system_zone_name = "Public"
 # hard coding the configs that are not
 # available from data previous from aws
 # issue: default proposal aes-128 is not
@@ -63,12 +64,12 @@ def main():
     system_alias = "FW name"
     system_int_name = "vpnintf"
     system_int_state = "present"
-    system_zone_int_name = system_int_name
+    system_zone_int_name = "port3"
     system_zone_state = "present"
     phase_1_dpd = "on-demand"
     phase_1_dhgrp = "2"
     phase_1_proposal= "aes128-sha1"
-    phase_1_int = "port1"
+    phase_1_int = "port3"
     phase_1_name = system_int_name
     phase_1_ike = "1"
     phase_1_authmethod = "psk"

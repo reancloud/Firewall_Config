@@ -36,14 +36,17 @@ In order to perform desired actions, several permission should be obtained:
 
 * Configure a VPN connection to the instance.
 
-* Add the attached files into the module located in /usr/local/lib/python3.6/dist-packages/ansible/modules/network/fortios
+* Add fortios_system_zone.py, fortios_vpn_ipsec_phase1_interface.py, fortios_vpn_ipsec_phase2_interface.py into the module located in /usr/local/lib/python3.6/dist-packages/ansible/modules/network/fortios
 
 * This fixes the bugs in the current release of fortios python module
 
+* Install necessary packages with "pip3 install pyFG" and "pip3 install fortiosapi"
 * Run grabdata.py with prompted inputs to generate configuration file.
 
 * Run final.yml using Ansible-playbook in python 3 environment to configure firewall.
 
 * An example would be python3 $(which ansible-playbook) final.yml -k
 
-* And then enter credentials to configure
+* Enter credentials to configure
+
+* After configuring FW, make interface port DHCP and disable retireve default gateway on ports 1 and 2

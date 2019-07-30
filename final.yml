@@ -158,4 +158,4 @@
            name: "{{ policy_dst_addr_out }}"
         service:
          -
-           name: "{{ policy_service_addr_out }}"
+           name: "{{ policy_service_out }}"
