@@ -184,5 +184,129 @@ def main():
         f.write('policy_dst_intf: "'+system_zone_name+'"\n')
         f.write(hardcode)
         f.close()
+# part 2
+    host2 = root[4][0][0][0].text
+    system_int_ip2 = root[4][0][1][0].text
+    system_int_cidr2 = root[4][0][1][2].text
+    system_int_remote_ip2 = root[4][1][1][0].text
+    system_int_remote_cidr2 = root[4][1][1][2].text
+    phase_1_keylife2 = root[4][2][2].text
+    phase_1_remotegw2 = root[4][1][0][0].text
+    phase_1_psksecret2 = root[4][2][5].text
+    phase_1_retryint2 = root[4][3][9][0].text
+    system_int_type2 = root[4][3][5].text
+    phase_1_mode2 = root[4][2][4].text
+    phase_2_keylife2 = root[4][3][3].text
+    router_bgp_as2 = root[4][0][2][0].text
+    router_bgp_ip2 = root[4][1][1][0].text
+    router_bgp_remote2 = root[4][1][2][0].text
+    router_bgp_network_id2 = host
+    router_bgp_router_id2 = host
+    system_zone_name2 = "Public"
+# hard coding the configs that are not
+# available from data previous from aws
+# issue: default proposal aes-128 is not
+# available in ansible fortios module.
+    vdom2 = "root"
+    timezone2 = "04"
+    system_alias2 = "FW name"
+    system_int_name2 = vpnid[0:14]
+    system_int_state2 = "present"
+    system_zone_int_name2 = system_int_name
+    system_zone_state2 = "present"
+    phase_1_dpd2 = "on-demand"
+    phase_1_dhgrp2 = "2"
+    phase_1_proposal2= "aes128-sha1"
+    phase_1_int2 = "port3"
+    phase_1_name2 = system_int_name
+    phase_1_ike2 = "1"
+    phase_1_authmethod2 = "psk"
+    phase_1_type2 = "static"
+    phase_1_encap2 = "none"
+    phase_1_encap_addr2 = "ike"
+    phase_1_modecfg2 = "disable"
+    phase_1_acct_verify2 = "enable"
+    phase_2_dhgrp2 = phase_1_dhgrp
+    phase_2_pfs2 = "enable"
+    phase_2_int_name2 = "phase_2_intf"
+    phase_2_state2 = "present"
+    router_bgp_capability_default_originate2 = "enable"
+    policy_src_intf2 = "Public"
+    policy_action2 = "accept"
+    policy_state2 = "present"
+    policy_status2 = "enable"
+    policy_src_addr_in2 = "all"
+    policy_dst_addr_in2 = "all"
+    policy_service_in2 = "ALL"
+    policy_src_addr_out2 = "all"
+    policy_dst_addr_out2 = "all"
+    policy_service_out2 = "ALL"
+    #!!! this config will overwrite any policy with id=policy_id
+    policy_id_in2 = "8"
+    policy_id_out2 = "9"
+    # put the hard coded part above to the variable yml file 
+    hardcode2 = (
+        'vdom: "'+vdom2+'"\n'
+        'timezone: "'+timezone2+'"\n'
+        'system_alias: "'+system_alias2+'"\n'
+        'system_int_name: "'+system_int_name2+'"\n'
+        'system_zone_int_name: "'+system_zone_int_name2+'"\n'
+        'phase_1_dpd: "'+phase_1_dpd2+'"\n'
+        'phase_1_dhgrp: "'+phase_1_dhgrp2+'"\n'
+        'phase_1_proposal: "'+phase_1_proposal2+'"\n'
+        'phase_1_int: "'+phase_1_int2+'"\n'
+        'phase_1_name: "'+phase_1_name2+'"\n'
+        'phase_1_ike: "'+phase_1_ike2+'"\n'
+        'phase_1_authmethod: "'+phase_1_authmethod2+'"\n'
+        'phase_1_type: "'+phase_1_type2+'"\n'
+        'phase_1_encap: "'+phase_1_encap2+'"\n'
+        'phase_1_encap_addr: "'+phase_1_encap_addr2+'"\n'
+        'phase_1_modecfg: "'+phase_1_modecfg2+'"\n'
+        'phase_2_dhgrp: "'+phase_2_dhgrp2+'"\n'
+        'phase_2_pfs: "'+phase_2_pfs2+'"\n'
+        'phase_2_int_name: "'+phase_2_int_name2+'"\n'
+        'router_bgp_capability_default_originate: "'+router_bgp_capability_default_originate2+'"\n'
+        'policy_src_intf: "'+policy_src_intf2+'"\n'
+        'policy_id_in: "'+policy_id_in2+'"\n'
+        'policy_id_out: "'+policy_id_out2+'"\n'
+        'system_int_state: "'+system_int_state2+'"\n'
+        'system_zone_state: "'+system_zone_state2+'"\n'
+        'phase_1_acct_verify: "'+phase_1_acct_verify2+'"\n'
+        'phase_2_state: "'+phase_2_state2+'"\n'
+        'policy_action: "'+policy_action2+'"\n'
+        'policy_state: "'+policy_state2+'"\n'
+        'policy_status: "'+policy_status2+'"\n'
+        'policy_src_addr_in: "'+policy_src_addr_in2+'"\n'
+        'policy_dst_addr_in: "'+policy_dst_addr_in2+'"\n'
+        'policy_service_in: "'+policy_service_in2+'"\n'
+        'policy_src_addr_out: "'+policy_src_addr_out2+'"\n'
+        'policy_dst_addr_out: "'+policy_dst_addr_out2+'"\n'
+        'policy_service_out: "'+policy_service_out2+'"\n'
+    )
+    with open ('vars2.yml', 'w') as f:
+        f.write('host: "'+host+'"\n')
+        f.write('system_int_ip: "'+system_int_ip+'/32'+'"\n')
+        f.write('system_int_remote_ip: "'+system_int_remote_ip+'/'+system_int_remote_cidr+'"\n')
+        f.write('system_zone_name: "'+system_zone_name+'"\n')
+        f.write('phase_1_keylife: "'+phase_1_keylife+'"\n')
+        f.write('phase_1_remotegw: "'+phase_1_remotegw+'"\n')
+        f.write('phase_1_psksecret: "'+phase_1_psksecret+'"\n')
+        f.write('phase_1_retryint: "'+phase_1_retryint+'"\n')
+        f.write('system_int_type: "'+system_int_type+'"\n')
+        f.write('phase_1_mode: "'+phase_1_mode+'"\n')
+        f.write('phase_2_keylife: "'+phase_2_keylife+'"\n')
+        f.write('router_bgp_as: "'+router_bgp_as+'"\n')
+        f.write('router_bgp_ip: "'+router_bgp_ip+'"\n')
+        f.write('router_bgp_remote: "'+router_bgp_remote+'"\n')
+        f.write('router_bgp_network_id: "'+router_bgp_network_id+'"\n')
+        f.write('router_bgp_router_id: "'+router_bgp_router_id+'"\n')
+        f.write('username: "'+username+'"\n')
+        f.write('password: "'+password+'"\n')
+        f.write('hostname: "'+hostname+'"\n')
+        f.write('phase_1_localgw: "'+phase_1_localgw+'"\n')
+        f.write('router_bgp_network_prefix: "'+router_bgp_network_prefix+'"\n')
+        f.write('policy_dst_intf: "'+system_zone_name+'"\n')
+        f.write(hardcode)
+        f.close()
 if __name__ == '__main__':
     main()

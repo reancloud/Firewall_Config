@@ -1,0 +1,161 @@
+# the final configuration file that
+# uses the values listed in vars.yml
+# and configure the firewall in a
+# single file.
+
+
+- hosts: localhost
+  tasks:
+  - name: include variables from vars2.yml
+    include_vars: vars2.yml
+  - name: configure hostname
+    fortios_system_global:
+      host: "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      system_global:
+        hostname: "{{ hostname }}"
+        timezone: "{{ timezone }}"
+        alias: "{{ system_alias }}"
+  - name: configure zone
+    fortios_system_zone:
+      host: "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      vdom: "{{ vdom }}"
+      https: "True"
+      system_zone:
+        state: "{{system_zone_state}}"
+        name: "{{ system_zone_name }}"
+        interface:
+        - interface-name: "{{ system_zone_int_name }}"
+  - name: configure vpn remote gateway
+    fortios_vpn_ipsec_phase1_interface:
+      host: "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      vdom: "{{ vdom }}"
+      https: "True"
+      vpn_ipsec_phase1_interface:
+        state: "present"
+        acct-verify: "{{ phase_1_acct_verify }}"
+        dpd: "{{ phase_1_dpd }}"
+        local-gw: "{{ phase_1_localgw }}"
+        dhgrp: "{{ phase_1_dhgrp }}"
+        proposal: "{{ phase_1_proposal }}"
+        keylife: "{{ phase_1_keylife }}"
+        remote-gw: "{{ phase_1_remotegw }}"
+        psksecret: "{{ phase_1_psksecret }}"
+        dpd-retryinterval: "{{ phase_1_retryint }}"
+        interface: "{{ phase_1_int }}"
+        name: "{{ phase_1_name }}"
+        ike-version: "{{ phase_1_ike }}"
+        ip-version: "4"
+        authmethod-remote: "{{ phase_1_authmethod }}"
+        type: "{{ phase_1_type }}"
+        encapsulation: "{{ phase_1_encap }}"
+        encapsulation-address: "{{ phase_1_encap_addr }}"
+        mode-cfg: "{{ phase_1_modecfg }}"
+        mode: "{{ phase_1_mode }}"
+  - name: configure interface
+    fortios_system_interface:
+      host: "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      vdom: "{{ vdom }}"
+      https: "yes"
+      system_interface:
+        name: "{{ system_int_name }}"
+        state: "{{ system_int_state }}"
+        type: "{{ system_int_type }}"
+        ip: "{{system_int_ip }}"
+        remote-ip: "{{ system_int_remote_ip }}"
+        vdom: "root"
+  - name: configure vpn remote gateway
+    fortios_vpn_ipsec_phase2_interface:
+      host: "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      vdom: "{{ vdom }}"
+      https: "True"
+      vpn_ipsec_phase2_interface:
+        state: "{{ phase_2_state }}"
+        dhgrp: "{{ phase_2_dhgrp }}"
+        phase1name: "{{ phase_1_name }}"
+        proposal: "{{ phase_1_proposal }}"
+        pfs: "{{ phase_2_pfs }}"
+        keylifeseconds: "{{ phase_2_keylife }}"
+        name: "{{ phase_2_int_name }}"
+  - name: Configure BGP
+    fortios_router_bgp:
+      host: "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      vdom: "{{ vdom }}"
+      https: "True"
+      router_bgp:
+        as: "{{ router_bgp_as }}"
+        neighbor:
+         -
+            ip: "{{ router_bgp_ip }}"
+            remote-as: "{{ router_bgp_remote }}"
+            capability-default-originate: "{{ router_bgp_capability_default_originate }}"
+        network:
+         -
+            id: "{{ router_bgp_network_id }}"
+            prefix: "{{ router_bgp_network_prefix }}"
+        router-id: "{{ router_bgp_router_id }}"
+  - name: configure firewall ipv4 policy inside
+    fortios_firewall_policy:
+      host: "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      vdom: "{{ vdom }}"
+      https: "True"
+      firewall_policy:
+        state: "{{ policy_state }}"
+        action: "{{ policy_action }}"
+        policyid: "{{ policy_id_in }}"
+        status: "{{ policy_status }}"
+        srcintf:
+         -
+           name: "{{ policy_src_intf }}"
+        dstintf:
+         -
+           name: "{{ policy_dst_intf }}"
+        srcaddr:
+         -
+           name: "{{ policy_src_addr_in }}"
+        dstaddr:
+         -
+           name: "{{ policy_dst_addr_in }}"
+        service:
+         -
+           name: "{{ policy_service_in }}"
+  - name: configure firewall ipv4 policy outside
+    fortios_firewall_policy:
+      host: "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      vdom: "{{ vdom }}"
+      https: "True"
+      firewall_policy:
+        state: "{{ policy_state }}"
+        action: "{{ policy_action }}"
+        policyid: "{{ policy_id_out }}"
+        status: "{{ policy_status }}"
+        srcintf:
+         -
+           name: "{{ policy_dst_intf }}"
+        dstintf:
+         -
+           name: "{{ policy_src_intf }}"
+        srcaddr:
+         -
+           name: "{{ policy_src_addr_out }}"
+        dstaddr:
+         -
+           name: "{{ policy_dst_addr_out }}"
+        service:
+         -
+           name: "{{ policy_service_out }}"
