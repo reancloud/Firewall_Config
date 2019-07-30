@@ -62,9 +62,9 @@ def main():
     vdom = "root"
     timezone = "04"
     system_alias = "FW name"
-    system_int_name = "vpnintf"
+    system_int_name = vpnid[0:13]
     system_int_state = "present"
-    system_zone_int_name = "port3"
+    system_zone_int_name = system_int_name
     system_zone_state = "present"
     phase_1_dpd = "on-demand"
     phase_1_dhgrp = "2"
