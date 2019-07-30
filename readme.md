@@ -43,7 +43,7 @@ In order to perform desired actions, several permission should be obtained:
 * Install necessary packages with "pip3 install pyFG" and "pip3 install fortiosapi"
 * Run grabdata.py with prompted inputs to generate configuration file.
 
-* Run final.yml using Ansible-playbook in python 3 environment to configure firewall.
+* Run final.yml and final2.yml using Ansible-playbook in python 3 environment to configure firewall.
 
 * An example would be python3 $(which ansible-playbook) final.yml -k
 
