@@ -62,7 +62,7 @@ def main():
     vdom = "root"
     timezone = "04"
     system_alias = "FW name"
-    system_int_name = vpnid[0:13]
+    system_int_name = wkldname
     system_int_state = "present"
     system_zone_int_name = system_int_name
     system_zone_state = "present"
@@ -210,7 +210,7 @@ def main():
     vdom2 = "root"
     timezone2 = "04"
     system_alias2 = "FW name"
-    system_int_name2 = vpnid[0:14]
+    system_int_name2 = wkldname
     system_int_state2 = "present"
     system_zone_int_name2 = system_int_name
     system_zone_state2 = "present"
@@ -284,29 +284,29 @@ def main():
         'policy_service_out: "'+policy_service_out2+'"\n'
     )
     with open ('vars2.yml', 'w') as f:
-        f.write('host: "'+host+'"\n')
-        f.write('system_int_ip: "'+system_int_ip+'/32'+'"\n')
-        f.write('system_int_remote_ip: "'+system_int_remote_ip+'/'+system_int_remote_cidr+'"\n')
-        f.write('system_zone_name: "'+system_zone_name+'"\n')
-        f.write('phase_1_keylife: "'+phase_1_keylife+'"\n')
-        f.write('phase_1_remotegw: "'+phase_1_remotegw+'"\n')
-        f.write('phase_1_psksecret: "'+phase_1_psksecret+'"\n')
-        f.write('phase_1_retryint: "'+phase_1_retryint+'"\n')
-        f.write('system_int_type: "'+system_int_type+'"\n')
-        f.write('phase_1_mode: "'+phase_1_mode+'"\n')
-        f.write('phase_2_keylife: "'+phase_2_keylife+'"\n')
-        f.write('router_bgp_as: "'+router_bgp_as+'"\n')
-        f.write('router_bgp_ip: "'+router_bgp_ip+'"\n')
-        f.write('router_bgp_remote: "'+router_bgp_remote+'"\n')
-        f.write('router_bgp_network_id: "'+router_bgp_network_id+'"\n')
-        f.write('router_bgp_router_id: "'+router_bgp_router_id+'"\n')
+        f.write('host: "'+host2+'"\n')
+        f.write('system_int_ip: "'+system_int_ip2+'/32'+'"\n')
+        f.write('system_int_remote_ip: "'+system_int_remote_ip2+'/'+system_int_remote_cidr2+'"\n')
+        f.write('system_zone_name: "'+system_zone_name2+'"\n')
+        f.write('phase_1_keylife: "'+phase_1_keylife2+'"\n')
+        f.write('phase_1_remotegw: "'+phase_1_remotegw2+'"\n')
+        f.write('phase_1_psksecret: "'+phase_1_psksecret2+'"\n')
+        f.write('phase_1_retryint: "'+phase_1_retryint2+'"\n')
+        f.write('system_int_type: "'+system_int_type2+'"\n')
+        f.write('phase_1_mode: "'+phase_1_mode2+'"\n')
+        f.write('phase_2_keylife: "'+phase_2_keylife2+'"\n')
+        f.write('router_bgp_as: "'+router_bgp_as2+'"\n')
+        f.write('router_bgp_ip: "'+router_bgp_ip2+'"\n')
+        f.write('router_bgp_remote: "'+router_bgp_remote2+'"\n')
+        f.write('router_bgp_network_id: "'+router_bgp_network_id2+'"\n')
+        f.write('router_bgp_router_id: "'+router_bgp_router_id2+'"\n')
         f.write('username: "'+username+'"\n')
         f.write('password: "'+password+'"\n')
         f.write('hostname: "'+hostname+'"\n')
         f.write('phase_1_localgw: "'+phase_1_localgw+'"\n')
         f.write('router_bgp_network_prefix: "'+router_bgp_network_prefix+'"\n')
-        f.write('policy_dst_intf: "'+system_zone_name+'"\n')
-        f.write(hardcode)
+        f.write('policy_dst_intf: "'+system_zone_name2+'"\n')
+        f.write(hardcode2)
         f.close()
 if __name__ == '__main__':
     main()
